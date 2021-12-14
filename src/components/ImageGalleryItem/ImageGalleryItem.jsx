@@ -1,4 +1,4 @@
-const ImageGalleryItem = ({ images, openModal, isLoading }) => {
+const ImageGalleryItem = ({ images, openModal }) => {
   return images.map(({ webformatURL, id }) => (
     <li className="ImageGalleryItem" key={id}>
       <img

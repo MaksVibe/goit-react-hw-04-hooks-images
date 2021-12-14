@@ -72,17 +72,15 @@ class App extends Component {
     return (
       <div className="App">
         <Searchbar hendleSubmit={this.hendleSubmit} />
+        <ImageGallery isLoading={isLoading}>
+          {images.length > 0 && (
+            <ImageGalleryItem images={images} openModal={this.onModalOpen} />
+          )}
 
-        {isLoading && <Loader />}
-        {images.length > 0 && (
-          <ImageGallery>
-            <ImageGalleryItem
-              images={images}
-              openModal={this.onModalOpen}
-              isLoading={isLoading}
-            />
-          </ImageGallery>
-        )}
+          {isLoading && (
+            <Loader type="Grid" color="#00BFFF" height={80} width={80} />
+          )}
+        </ImageGallery>
         {images.length > 11 && <Button handleLoadMore={this.handleLoadMore} />}
         {isModalOpen && (
           <Modal largeImage={largeImage} onModalClose={this.onModalClose} />
