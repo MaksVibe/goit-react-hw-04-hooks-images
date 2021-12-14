@@ -1,6 +1,9 @@
 import Searchbar from "./components/Searchbar/Searchbar";
 import ImageGallery from "./components/ImageGallery/ImageGallery.jsx";
 import ImageGalleryItem from "./components/ImageGalleryItem/ImageGalleryItem.jsx";
+import Modal from "./components/common/Modal/Modal.jsx";
+import Loader from "react-loader-spinner";
+
 import { Component } from "react";
 import Button from "./components/common/Button/Button.jsx";
 
@@ -28,6 +31,7 @@ class App extends Component {
   }
 
   hendleSubmit = (input) => {
+    if (!input) return false;
     this.setState({ q: input, images: [] });
   };
 
@@ -47,8 +51,9 @@ class App extends Component {
     }
   };
 
-  onModalOpen = () => {
-    return this.setState({ isModalOpen: true });
+  onModalOpen = (e) => {
+    const largeURL = e.target.getAttribute("src");
+    return this.setState({ isModalOpen: true, largeImage: largeURL });
   };
 
   onModalClose = () => {
@@ -71,6 +76,14 @@ class App extends Component {
         )}
         {this.state.images.length > 11 && (
           <Button handleLoadMore={this.handleLoadMore} />
+        )}
+        {this.state.isModalOpen && (
+          <Modal
+            largeImage={this.state.largeImage}
+            openModal={this.onModalOpen}
+            onModalClose={this.onModalClose}
+            isModalOpen={this.isModalOpen}
+          />
         )}
       </div>
     );
