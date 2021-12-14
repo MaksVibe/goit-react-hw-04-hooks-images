@@ -2,6 +2,7 @@ import Searchbar from "./components/Searchbar/Searchbar";
 import ImageGallery from "./components/ImageGallery/ImageGallery.jsx";
 import ImageGalleryItem from "./components/ImageGalleryItem/ImageGalleryItem.jsx";
 import Modal from "./components/common/Modal/Modal.jsx";
+import Loader from "react-loader-spinner";
 
 import { Component } from "react";
 import Button from "./components/common/Button/Button.jsx";
@@ -34,8 +35,15 @@ class App extends Component {
     this.setState({ q: input, images: [] });
   };
 
-  handleLoadMore = () => {
-    this.setState((prev) => ({ page: prev.page + 1 }));
+  handleLoadMore = async () => {
+    this.setState({ isLoading: true });
+    try {
+      this.setState((prev) => ({ page: prev.page + 1 }));
+    } catch (error) {
+      this.setState({ error: error.message });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   };
 
   getImages = async (q, page) => {
@@ -46,7 +54,7 @@ class App extends Component {
     } catch (error) {
       this.setState({ error: error.message });
     } finally {
-      this.setState({ loading: false });
+      this.setState({ isLoading: false });
     }
   };
 
@@ -60,29 +68,24 @@ class App extends Component {
   };
 
   render() {
+    const { images, largeImage, isLoading, isModalOpen } = this.state;
     return (
       <div className="App">
         <Searchbar hendleSubmit={this.hendleSubmit} />
-        {this.state.images.length > 0 && (
+
+        {isLoading && <Loader />}
+        {images.length > 0 && (
           <ImageGallery>
             <ImageGalleryItem
-              images={this.state.images}
+              images={images}
               openModal={this.onModalOpen}
-              onModalClose={this.onModalClose}
-              isModalOpen={this.state.isModalOpen}
+              isLoading={isLoading}
             />
           </ImageGallery>
         )}
-        {this.state.images.length > 11 && (
-          <Button handleLoadMore={this.handleLoadMore} />
-        )}
-        {this.state.isModalOpen && (
-          <Modal
-            largeImage={this.state.largeImage}
-            openModal={this.onModalOpen}
-            onModalClose={this.onModalClose}
-            isModalOpen={this.isModalOpen}
-          />
+        {images.length > 11 && <Button handleLoadMore={this.handleLoadMore} />}
+        {isModalOpen && (
+          <Modal largeImage={largeImage} onModalClose={this.onModalClose} />
         )}
       </div>
     );

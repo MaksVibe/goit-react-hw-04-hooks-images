@@ -1,7 +1,5 @@
-// import Modal from "../common/Modal/Modal";
-
-const ImageGalleryItem = ({ images, openModal, onModalClose, isModalOpen }) => {
-  return images.map(({ webformatURL, id, largeImageURL }) => (
+const ImageGalleryItem = ({ images, openModal, isLoading }) => {
+  return images.map(({ webformatURL, id }) => (
     <li className="ImageGalleryItem" key={id}>
       <img
         src={webformatURL}
