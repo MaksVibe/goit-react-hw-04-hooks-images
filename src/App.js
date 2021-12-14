@@ -31,7 +31,8 @@ class App extends Component {
   }
 
   hendleSubmit = (input) => {
-    if (!input) return false;
+    console.log(this.state.q);
+    if (!input || this.state.q === input) return false;
     this.setState({ q: input, images: [] });
   };
 
