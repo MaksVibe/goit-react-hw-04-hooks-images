@@ -2,7 +2,6 @@ import Searchbar from "./components/Searchbar/Searchbar";
 import ImageGallery from "./components/ImageGallery/ImageGallery.jsx";
 import ImageGalleryItem from "./components/ImageGalleryItem/ImageGalleryItem.jsx";
 import Modal from "./components/common/Modal/Modal.jsx";
-import Loader from "react-loader-spinner";
 
 import { Component } from "react";
 import Button from "./components/common/Button/Button.jsx";
