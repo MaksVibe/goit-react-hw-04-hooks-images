@@ -14,7 +14,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [largeImage, setLargeImage] = useState("");
-  const [isModalOpen, setIsModalOpeng] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (!q) return false;
@@ -56,14 +56,16 @@ const App = () => {
   };
 
   const onModalOpen = (e) => {
-    const largeURL = e.target.getAttribute("src");
-    setIsModalOpeng(true);
-    setLargeImage(largeURL);
+    const large = images.find(({ largeImageURL, webformatURL }) =>
+      webformatURL === e.target.getAttribute("src") ? largeImageURL : false
+    );
+    setIsModalOpen(true);
+    setLargeImage(large.largeImageURL);
     return;
   };
 
   const onModalClose = () => {
-    return setIsModalOpeng(false);
+    return setIsModalOpen(false);
   };
 
   return (
