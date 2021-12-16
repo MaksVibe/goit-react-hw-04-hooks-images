@@ -3,6 +3,12 @@ import { createPortal } from "react-dom";
 
 const modalRootRef = document.querySelector("#modal-root");
 
+// useEffect(() => {
+//     window.addEventListener("keydown", handleEsc);
+//   return () => {
+//     window.removeEventListener("keydown", handleEsc);
+//   }
+// }, [input])
 class Modal extends Component {
   componentDidMount() {
     window.addEventListener("keydown", this.handleEsc);
