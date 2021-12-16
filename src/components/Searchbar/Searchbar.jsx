@@ -1,37 +1,36 @@
-import { Component } from "react";
+import { useState } from "react";
 
-class Searchbar extends Component {
-  state = {
-    inputText: "",
-  };
-  hendleSubmit = (e) => {
+const Searchbar = ({ hendleSubmit }) => {
+  const [inputText, setinputText] = useState("");
+
+  const hendleSubmitInput = (e) => {
     e.preventDefault();
-    this.props.hendleSubmit(this.state.inputText);
+    hendleSubmit(inputText);
   };
-  handelChange = (e) => {
-    this.setState({ inputText: e.target.value.toLowerCase() });
-  };
-  render() {
-    return (
-      <header className="Searchbar">
-        <form className="SearchForm" onSubmit={this.hendleSubmit}>
-          <button type="submit" className="SearchForm-button">
-            <span className="SearchForm-button-label">Search</span>
-          </button>
 
-          <input
-            onChange={this.handelChange}
-            value={this.state.inputText}
-            className="SearchForm-input"
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-        </form>
-      </header>
-    );
-  }
-}
+  const handelChange = (e) => {
+    setinputText(e.target.value.toLowerCase());
+  };
+
+  return (
+    <header className="Searchbar">
+      <form className="SearchForm" onSubmit={hendleSubmitInput}>
+        <button type="submit" className="SearchForm-button">
+          <span className="SearchForm-button-label">Search</span>
+        </button>
+
+        <input
+          onChange={handelChange}
+          value={inputText}
+          className="SearchForm-input"
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+        />
+      </form>
+    </header>
+  );
+};
 
 export default Searchbar;
